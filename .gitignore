@@ -58,6 +58,9 @@ cmake-build-*
 ## VS code artifacts
 .vscode
 
+## VS Projects
+*.vcxproj
+
 ## Unix executables from our example Makefiles
 examples/example_apple_metal/example_apple_metal
 examples/example_apple_opengl2/example_apple_opengl2
