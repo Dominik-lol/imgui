@@ -1858,7 +1858,7 @@ void ImGui_ImplVulkanH_CreateOrResizeWindow(VkInstance instance, VkPhysicalDevic
     check_vk_result(err);
 
     // Transition the images to the correct layout for rendering
-    for (uint32_t i = 0; i < wd->ImageCount; i++)
+    /*for (uint32_t i = 0; i < wd->ImageCount; i++)
     {
         VkImageMemoryBarrier barrier = {};
         barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -1871,7 +1871,7 @@ void ImGui_ImplVulkanH_CreateOrResizeWindow(VkInstance instance, VkPhysicalDevic
         barrier.subresourceRange.levelCount = 1;
         barrier.subresourceRange.layerCount = 1;
         vkCmdPipelineBarrier(command_buffer, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
-    }
+    }*/
 
     err = vkEndCommandBuffer(command_buffer);
     check_vk_result(err);
@@ -2120,7 +2120,7 @@ static void ImGui_ImplVulkan_RenderWindow(ImGuiViewport* viewport, void*)
             VkImageMemoryBarrier barrier = {};
             barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
             barrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-            barrier.oldLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+            barrier.oldLayout = fd->ImageLayout;
             barrier.newLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
             barrier.image = fd->Backbuffer;
             barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
@@ -2182,6 +2182,7 @@ static void ImGui_ImplVulkan_RenderWindow(ImGuiViewport* viewport, void*)
             barrier.subresourceRange.levelCount = 1;
             barrier.subresourceRange.layerCount = 1;
             vkCmdPipelineBarrier(fd->CommandBuffer, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, 0, 0, nullptr, 0, nullptr, 1, &barrier);
+            fd->ImageLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
         }
         else
 #endif

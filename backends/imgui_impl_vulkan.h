@@ -219,6 +219,8 @@ struct ImGui_ImplVulkanH_Frame
     VkImage             Backbuffer;
     VkImageView         BackbufferView;
     VkFramebuffer       Framebuffer;
+
+    VkImageLayout       ImageLayout = VK_IMAGE_LAYOUT_UNDEFINED; // Current layout of the backbuffer (important to track if using dynamic rendering)
 };
 
 struct ImGui_ImplVulkanH_FrameSemaphores
